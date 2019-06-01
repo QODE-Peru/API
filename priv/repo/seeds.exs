@@ -9,3 +9,7 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+
+KaypiApi.Repo.insert!(%KaypiApi.Accounts.UserType{name: "normal"})
+KaypiApi.Repo.insert!(%KaypiApi.Accounts.UserType{name: "voluntario "})

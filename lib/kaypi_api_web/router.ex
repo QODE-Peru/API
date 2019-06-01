@@ -20,7 +20,10 @@ defmodule KaypiApiWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", KaypiApiWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", KaypiApiWeb do
+    pipe_through :api
+
+    resources "/user_types", UserTypeController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
+  end
 end
