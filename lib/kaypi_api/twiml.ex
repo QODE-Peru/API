@@ -1,11 +1,11 @@
-defmodule KaypiApiWeb.Twiml do
+defmodule KaypiApi.Twiml do
   import ExTwiml
 
-  def dial_albert do
+  def dial do
     twiml do
-      # This should be your Twilio Number or verified Caller ID
+      # Twilio Number or verified Caller ID
       dial callerid: "+5117071809" do
-        client "albert"
+        client "1"
       end
     end
   end

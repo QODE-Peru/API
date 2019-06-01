@@ -21,6 +21,9 @@ defmodule KaypiApiWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    get "/demo-llamar", TwilioController, :demo_llamar
+    get "/demo-recibir", TwilioController, :demo_recibir
   end
 
   # Other scopes may use custom stacks.
@@ -32,6 +35,9 @@ defmodule KaypiApiWeb.Router do
     resources "/credentials", CredentialController, except: [:new, :edit]
     post "/session", SessionController, :create
 
+    post "/dial", TwilioController, :dial
+
+
   end
 
   # Secure API
@@ -41,6 +47,5 @@ defmodule KaypiApiWeb.Router do
     get "/twilio-token", TwilioController, :token
     get "/receive-token", TwilioController, :receive
     get "/llamar-token", TwilioController, :llamar
-
   end
 end
