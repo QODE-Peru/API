@@ -6,7 +6,7 @@ defmodule KaypiApi.Accounts do
   import Ecto.Query, warn: false
   alias KaypiApi.Repo
 
-  alias KaypiApi.Accounts.UserType
+  alias KaypiApi.Accounts.{User, UserType, Credential}
 
   @doc """
   Returns the list of user_types.
@@ -104,8 +104,6 @@ defmodule KaypiApi.Accounts do
     UserType.changeset(user_type, %{})
   end
 
-  alias KaypiApi.Accounts.User
-
   @doc """
   Returns the list of users.
 
@@ -116,7 +114,9 @@ defmodule KaypiApi.Accounts do
 
   """
   def list_users do
-    Repo.all(User)
+    User
+    |> Repo.all()
+    |> Repo.preload(:credential)
   end
 
   @doc """
@@ -133,7 +133,11 @@ defmodule KaypiApi.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    User
+    |> Repo.get!(id)
+    |> Repo.preload(:credential)
+ end
 
   @doc """
   Creates a user.
@@ -148,8 +152,11 @@ defmodule KaypiApi.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
-    %User{}
+    UserType
+    |> Repo.get_by(name: "normal")
+    |> Ecto.build_assoc(:users)
     |> User.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2, required: true)
     |> Repo.insert()
   end
 
@@ -168,6 +175,7 @@ defmodule KaypiApi.Accounts do
   def update_user(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2, required: true)
     |> Repo.update()
   end
 
@@ -187,6 +195,7 @@ defmodule KaypiApi.Accounts do
     Repo.delete(user)
   end
 
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
 
@@ -198,5 +207,100 @@ defmodule KaypiApi.Accounts do
   """
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+
+  @doc """
+  Returns the list of credentials.
+
+  ## Examples
+
+      iex> list_credentials()
+      [%Credential{}, ...]
+
+  """
+  def list_credentials do
+    Repo.all(Credential)
+  end
+
+  @doc """
+  Gets a single credential.
+
+  Raises `Ecto.NoResultsError` if the Credential does not exist.
+
+  ## Examples
+
+      iex> get_credential!(123)
+      %Credential{}
+
+      iex> get_credential!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_credential!(id), do: Repo.get!(Credential, id)
+
+  @doc """
+  Creates a credential.
+
+  ## Examples
+
+      iex> create_credential(%{field: value})
+      {:ok, %Credential{}}
+
+      iex> create_credential(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_credential(attrs \\ %{}) do
+    %Credential{}
+    |> Credential.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a credential.
+
+  ## Examples
+
+      iex> update_credential(credential, %{field: new_value})
+      {:ok, %Credential{}}
+
+      iex> update_credential(credential, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_credential(%Credential{} = credential, attrs) do
+    credential
+    |> Credential.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Credential.
+
+  ## Examples
+
+      iex> delete_credential(credential)
+      {:ok, %Credential{}}
+
+      iex> delete_credential(credential)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_credential(%Credential{} = credential) do
+    Repo.delete(credential)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking credential changes.
+
+  ## Examples
+
+      iex> change_credential(credential)
+      %Ecto.Changeset{source: %Credential{}}
+
+  """
+  def change_credential(%Credential{} = credential) do
+    Credential.changeset(credential, %{})
   end
 end

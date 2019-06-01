@@ -1,6 +1,6 @@
 defmodule KaypiApiWeb.UserView do
   use KaypiApiWeb, :view
-  alias KaypiApiWeb.UserView
+  alias KaypiApiWeb.{UserView, CredentialView}
 
   def render("index.json", %{users: users}) do
     %{data: render_many(users, UserView, "user.json")}
@@ -16,6 +16,8 @@ defmodule KaypiApiWeb.UserView do
       last_name: user.last_name,
       phone_number: user.phone_number,
       document_number: user.document_number,
-      birthday: user.birthday}
+      birthday: user.birthday,
+      #credential: render_one(user.credential, CredentialView)
+    }
   end
 end

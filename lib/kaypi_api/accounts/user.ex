@@ -1,7 +1,7 @@
 defmodule KaypiApi.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias KaypiApi.Accounts.UserType
+  alias KaypiApi.Accounts.{UserType, Credential}
 
   schema "users" do
     field :birthday, :date
@@ -10,6 +10,7 @@ defmodule KaypiApi.Accounts.User do
     field :last_name, :string
     field :phone_number, :string
     belongs_to :user_type, UserType
+    has_one :credential, Credential
 
     timestamps()
   end
