@@ -10,12 +10,20 @@ defmodule KaypiApiWeb.TwilioView do
     %{data: render_one(token, TwilioView, "llamar-token.json")}
   end
 
+  def render("token.json", %{token: token}) do
+    %{data: render_one(token, TwilioView, "twilio-token.json")}
+  end
+
   def render("receive-token.json", %{twilio: token}) do
     %{"receive-token" => token}
   end
 
   def render("llamar-token.json", %{twilio: token}) do
     %{"llamar-token" => token}
+  end
+
+  def render("twilio-token.json", %{twilio: token}) do
+    %{"twilio-token" => token}
   end
 
 end

@@ -22,6 +22,18 @@ defmodule KaypiApiWeb.TwilioController do
     |> render("receive.json", token: token)
   end
 
+  def token(conn, _params) do
+    %{id: id} = KaypiApi.Accounts.GuardianSerializer.Plug.current_resource(conn)
+    token =
+      ExTwilio.Capability.new
+      |> ExTwilio.Capability.allow_client_outgoing("AP1576c95c9224426e8b64b2259ca72dc3")
+      |> ExTwilio.Capability.allow_client_incoming(id |> Integer.to_string())
+      |> ExTwilio.Capability.token
+
+    conn
+    |> render("token.json", token: token)
+  end
+
   # def dial(conn, _params) do
   #   resp = KaypiApi.Twiml.dial_albert
   #   conn

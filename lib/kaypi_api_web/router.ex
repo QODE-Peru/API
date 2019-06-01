@@ -32,15 +32,15 @@ defmodule KaypiApiWeb.Router do
     resources "/credentials", CredentialController, except: [:new, :edit]
     post "/session", SessionController, :create
 
-
-    post "/dial", TwilioController, :dial
   end
 
   # Secure API
   scope "/api/secure", KaypiApiWeb do
     pipe_through [:api, :api_auth]
 
+    get "/twilio-token", TwilioController, :token
     get "/receive-token", TwilioController, :receive
     get "/llamar-token", TwilioController, :llamar
+
   end
 end
