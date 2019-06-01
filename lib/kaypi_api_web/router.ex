@@ -25,5 +25,6 @@ defmodule KaypiApiWeb.Router do
 
     resources "/user_types", UserTypeController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]
+    resources "/credentials", CredentialController, except: [:new, :edit]
   end
 end
