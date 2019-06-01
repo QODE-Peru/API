@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :kaypi_api, KaypiApi.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "kaypi_api_dev",
+  password: "123456789",
   database: "kaypi_api_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
