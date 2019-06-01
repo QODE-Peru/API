@@ -40,6 +40,7 @@ defmodule KaypiApiWeb.Router do
   scope "/api/secure", KaypiApiWeb do
     pipe_through [:api, :api_auth]
 
-    get "/receive", TwilioController, :receive
+    get "/receive-token", TwilioController, :receive
+    get "/llamar-token", TwilioController, :llamar
   end
 end

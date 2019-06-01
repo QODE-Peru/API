@@ -1,17 +1,16 @@
 defmodule KaypiApiWeb.TwilioController do
   use KaypiApiWeb, :controller
 
-  # def llamar(conn, _params) do
-  #   token =
-  #     ExTwilio.Capability.new
-  #     |> ExTwilio.Capability.allow_client_outgoing("AP1576c95c9224426e8b64b2259ca72dc3")
-  #     |> ExTwilio.Capability.token
-  #
-  #   conn
-  #   |> put_view(PruebaTwilioWeb.LlamadaView)
-  #   |> render("llamar.html", token: token)
-  # end
-  #
+  def llamar(conn, _params) do
+    token =
+      ExTwilio.Capability.new
+      |> ExTwilio.Capability.allow_client_outgoing("AP1576c95c9224426e8b64b2259ca72dc3")
+      |> ExTwilio.Capability.token
+
+    conn
+    |> render("llamar.json", token: token)
+  end
+
   def receive(conn, _params) do
     %{id: id} = KaypiApi.Accounts.GuardianSerializer.Plug.current_resource(conn)
     token =

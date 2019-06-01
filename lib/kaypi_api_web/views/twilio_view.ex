@@ -3,11 +3,19 @@ defmodule KaypiApiWeb.TwilioView do
   alias __MODULE__
 
   def render("receive.json", %{token: token}) do
-    %{data: render_one(token, TwilioView, "token.json")}
+    %{data: render_one(token, TwilioView, "receive-token.json")}
   end
 
-  def render("token.json", data) do
-    %{"receive-token" => data}
+  def render("llamar.json", %{token: token}) do
+    %{data: render_one(token, TwilioView, "llamar-token.json")}
+  end
+
+  def render("receive-token.json", %{twilio: token}) do
+    %{"receive-token" => token}
+  end
+
+  def render("llamar-token.json", %{twilio: token}) do
+    %{"llamar-token" => token}
   end
 
 end
