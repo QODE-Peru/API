@@ -17,7 +17,7 @@ defmodule KaypiApiWeb.UserView do
       phone_number: user.phone_number,
       document_number: user.document_number,
       birthday: user.birthday,
-      #credential: render_one(user.credential, CredentialView)
+      credential: render_one(user.credential, CredentialView, "show.json")
     }
   end
 end
