@@ -27,9 +27,9 @@ defmodule KaypiApiWeb.Router do
   scope "/api", KaypiApiWeb do
     pipe_through :api
 
-    #resources "/user_types", UserTypeController, except: [:new, :edit]
+    resources "/user_types", UserTypeController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]
-    #resources "/credentials", CredentialController, except: [:new, :edit]
+    resources "/credentials", CredentialController, except: [:new, :edit]
     post "/session", SessionController, :create
 
 
@@ -40,6 +40,6 @@ defmodule KaypiApiWeb.Router do
   scope "/api/secure", KaypiApiWeb do
     pipe_through [:api, :api_auth]
 
-    get "/", PageController, :index
+    get "/receive", TwilioController, :receive
   end
 end

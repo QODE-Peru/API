@@ -1,6 +1,6 @@
 defmodule KaypiApiWeb.UserTypeView do
   use KaypiApiWeb, :view
-  alias KaypiApiWeb.UserTypeView
+  alias __MODULE__
 
   def render("index.json", %{user_types: user_types}) do
     %{data: render_many(user_types, UserTypeView, "user_type.json")}
