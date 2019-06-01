@@ -78,3 +78,9 @@ config :phoenix, :plug_init_mode, :runtime
 config :kaypi_api, KaypiApi.Accounts.GuardianSerializer,
        issuer: "kaypi_api",
        secret_key: "ddkpCLP4+AdZnz5RdEb1weIW0tBJIwaRUP0oYR1qukv2Dp4tmfeY5P/ygTld7gBU"
+
+config :kaypi_api, KaypiApi.Pipeline.Auth,
+       module: KaypiApi.Accounts.GuardianSerializer,
+       error_handler: KaypiApi.Accounts.AuthErrorHandler
+
+import_config "dev.secret.exs"

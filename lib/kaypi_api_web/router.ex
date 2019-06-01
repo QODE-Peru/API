@@ -10,7 +10,11 @@ defmodule KaypiApiWeb.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json", "text/xml"]
+  end
+
+  pipeline :api_auth do
+    plug KaypiApi.Pipeline.Auth
   end
 
   scope "/", KaypiApiWeb do
@@ -23,9 +27,19 @@ defmodule KaypiApiWeb.Router do
   scope "/api", KaypiApiWeb do
     pipe_through :api
 
-    resources "/user_types", UserTypeController, except: [:new, :edit]
+    #resources "/user_types", UserTypeController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]
-    resources "/credentials", CredentialController, except: [:new, :edit]
+    #resources "/credentials", CredentialController, except: [:new, :edit]
     post "/session", SessionController, :create
+
+
+    post "/dial", TwilioController, :dial
+  end
+
+  # Secure API
+  scope "/api/secure", KaypiApiWeb do
+    pipe_through [:api, :api_auth]
+
+    get "/", PageController, :index
   end
 end

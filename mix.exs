@@ -20,7 +20,7 @@ defmodule KaypiApi.MixProject do
   def application do
     [
       mod: {KaypiApi.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ex_twilio]
     ]
   end
 
@@ -45,7 +45,9 @@ defmodule KaypiApi.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:comeonin, "~> 5.1.1"},
       {:argon2_elixir, "~> 2.0.5"},
-      {:guardian, "~> 1.0"}
+      {:guardian, "~> 1.0"},
+      {:ex_twilio, "~> 0.7.0"},
+      {:ex_twiml, "~> 2.1.0"}
     ]
   end
 
