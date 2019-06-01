@@ -156,7 +156,7 @@ defmodule KaypiApi.Accounts do
     |> Repo.get_by(name: "normal")
     |> Ecto.build_assoc(:users)
     |> User.changeset(attrs)
-    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2, required: true)
+    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset_create/2, required: true)
     |> Repo.insert()
   end
 
@@ -237,6 +237,7 @@ defmodule KaypiApi.Accounts do
       ** (Ecto.NoResultsError)
 
   """
+  def get_credential_by_email!(email), do: Repo.get_by!(Credential, email: email) |> Repo.preload(:user)
   def get_credential!(id), do: Repo.get!(Credential, id)
 
   @doc """
@@ -302,5 +303,18 @@ defmodule KaypiApi.Accounts do
   """
   def change_credential(%Credential{} = credential) do
     Credential.changeset(credential, %{})
+  end
+
+  def find_user_by_credentials(%Credential{} = credential, attrs) do
+    credential
+    |> Credential.changeset_session(attrs)
+    |> return_user()
+  end
+
+  defp return_user({:error, changeset}) do
+    {:error, changeset}
+  end
+  defp return_user({:ok, %Ecto.Changeset{data: %{user: user}}}) do
+    {:ok, user}
   end
 end

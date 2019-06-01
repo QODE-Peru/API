@@ -74,3 +74,7 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :kaypi_api, KaypiApi.Accounts.GuardianSerializer,
+       issuer: "kaypi_api",
+       secret_key: "ddkpCLP4+AdZnz5RdEb1weIW0tBJIwaRUP0oYR1qukv2Dp4tmfeY5P/ygTld7gBU"
