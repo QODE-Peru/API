@@ -6,7 +6,7 @@
 use Mix.Config
 
 database_url =
-  System.get_env("DATABASE_URL") ||
+  "ecto://kaypi:123456789@localhost/kaypi_prod" ||
     raise """
     environment variable DATABASE_URL is missing.
     For example: ecto://USER:PASS@HOST/DATABASE
@@ -18,7 +18,7 @@ config :kaypi_api, KaypiApi.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 secret_key_base =
-  System.get_env("SECRET_KEY_BASE") ||
+  "ZZGUtNXtTRokzeTXmiXUtyiAt016o8fqYizerrmqVNjp2e8oTmk399mymvQrsr+d" ||
     raise """
     environment variable SECRET_KEY_BASE is missing.
     You can generate one by calling: mix phx.gen.secret
